@@ -185,13 +185,9 @@ int countFlush(const vector<Card> & cards, const vector<Card> & hand)
   for (auto & i : subsets) {
     i.insert(i.end(), hand.begin(), hand.end());
     
-    sort(i.begin(), i.end(), [](const Card & a, const Card & b) { 
-      return a.rank() < b.rank(); 
-    });
-
-    i.erase(unique(i.begin(), i.end()), i.end());
-    
-    if (i.size() == 1)
+    if (all_of(i.begin(),i.end(), [&](const Card & c) {
+      return c.suit() == i[0].suit();
+    }))
       count++;
   }
   return count;
